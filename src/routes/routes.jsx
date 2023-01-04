@@ -5,6 +5,9 @@ import Layout from '../components/Layout'
 import NotFound from '../components/NotFound'
 import Signup from '../components/Signup'
 import Login from '../components/Login'
+import Admin from '../components/Admin'
+import PrivateRoute from '../components/PrivateRoute'
+import Private from '../components/Private'
 
 export const baseRoute = createBrowserRouter([
   {
@@ -23,14 +26,28 @@ export const baseRoute = createBrowserRouter([
       {
         path: '/login',
         element: (
-          <>
             <Login />
-          </>
         ),
       },
       {
         path: '/auth/activate/:tokenId',
         element: <Activate />,
+      },
+      {
+        path: '/admin',
+        element: (
+          <PrivateRoute>
+            <Admin />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/private',
+        element: (
+          <PrivateRoute>
+            <Private />
+          </PrivateRoute>
+        ),
       },
     ],
   },

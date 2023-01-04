@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { authenticate, isAuth } from '../../helper/helper'
+import { authenticate } from '../../helper/helper'
 import { toast } from 'react-toastify'
 
 export const apiSlice = createApi({
@@ -27,9 +27,6 @@ export const apiSlice = createApi({
         authenticate(data, () => {
           toast.success(`Hey ${data?.user?.name}, Welcome back!`)
         })
-        setTimeout(() => {
-          isAuth() && window.location.reload()
-        }, 2500)
       },
     }),
     accountActivation: builder.mutation({

@@ -3,7 +3,7 @@ import { useSigninMutation } from '../features/api/apiSlice'
 import { toast } from 'react-toastify'
 
 import { useNavigate } from 'react-router-dom'
-import { makeid } from '../helper/helper'
+import { isAuth, makeid } from '../helper/helper'
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -30,7 +30,11 @@ const Login = () => {
       toast.success('Signin successfull', {
         toastId: makeid(),
       })
-      navigate('/')
+      setTimeout(() => {
+         isAuth() && isAuth().role === 'admin'
+           ? navigate('/admin')
+           : navigate('/private')
+      }, 2500)
     }
   }, [isSuccess, navigate])
   if (isLoading) {

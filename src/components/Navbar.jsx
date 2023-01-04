@@ -47,9 +47,29 @@ const Navbar = () => {
                 </li>
               </>
             )}
-            {isAuth() && (
+            {isAuth() && isAuth().role === 'admin' && (
               <li className='nav-item'>
-                <span className='nav-link'>{isAuth().name}</span>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? 'nav-link active' : 'nav-link'
+                  }
+                  to='/admin'
+                >
+                  {isAuth().name}
+                </NavLink>
+              </li>
+            )}
+
+            {isAuth() && isAuth().role === 'subscriber' && (
+              <li className='nav-item'>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? 'nav-link active' : 'nav-link'
+                  }
+                  to='/private'
+                >
+                  {isAuth().name}
+                </NavLink>
               </li>
             )}
             {isAuth() && (
