@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { authenticate } from '../../helper/helper'
+import { authenticate, getCookie } from '../../helper/helper'
 import { toast } from 'react-toastify'
-
+import { userLoggedIn } from './authSlice'
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -22,11 +22,19 @@ export const apiSlice = createApi({
         method: 'POST',
         body,
       }),
-      async onQueryStarted(arg, { queryFulfilled }) {
+      async onQueryStarted(arg, { dispatch,  queryFulfilled }) {
         const { data } = await queryFulfilled
         authenticate(data, () => {
           toast.success(`Hey ${data?.user?.name}, Welcome back!`)
         })
+        dispatch(
+          dispatch(
+            userLoggedIn({
+              token: data.token,
+              user: data.user,
+            })
+          )
+        )
       },
     }),
     accountActivation: builder.mutation({
@@ -36,6 +44,15 @@ export const apiSlice = createApi({
         body,
       }),
     }),
+    getUserProfile: builder.query({
+      query: ({id}) => ({
+        url: `/user/${id}`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getCookie('token')}`,
+        },
+      }),
+    }),
   }),
 })
 
@@ -43,4 +60,5 @@ export const {
   useSigninMutation,
   useSignupMutation,
   useAccountActivationMutation,
+  useGetUserProfileQuery,
 } = apiSlice
