@@ -22,7 +22,7 @@ export const apiSlice = createApi({
         method: 'POST',
         body,
       }),
-      async onQueryStarted(arg, { dispatch,  queryFulfilled }) {
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         const { data } = await queryFulfilled
         authenticate(data, () => {
           toast.success(`Hey ${data?.user?.name}, Welcome back!`)
@@ -45,9 +45,19 @@ export const apiSlice = createApi({
       }),
     }),
     getUserProfile: builder.query({
-      query: ({id}) => ({
+      query: ({ id }) => ({
         url: `/user/${id}`,
         method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getCookie('token')}`,
+        },
+      }),
+    }),
+    updateUserProfile: builder.mutation({
+      query: (body) => ({
+        url: `/user/update`,
+        method: 'PUT',
+        body,
         headers: {
           Authorization: `Bearer ${getCookie('token')}`,
         },
@@ -61,4 +71,5 @@ export const {
   useSignupMutation,
   useAccountActivationMutation,
   useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
 } = apiSlice

@@ -61,6 +61,17 @@ export const signout = (next) => {
   next()
 }
 
+//update user in localstorage
+export const updateUser = (response, next) => {
+  console.log('UPDATE USER IN LOCALSTORAGE HELPERS', response)
+  if (typeof window !== 'undefined') {
+    let auth = JSON.parse(localStorage.getItem('user'))
+    auth = response.data
+    localStorage.setItem('user', JSON.stringify(auth))
+  }
+  next()
+}
+
 export const makeid = (length) => {
   var result = ''
   var characters =
