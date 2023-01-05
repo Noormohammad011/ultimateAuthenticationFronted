@@ -63,6 +63,20 @@ export const apiSlice = createApi({
         },
       }),
     }),
+    frogotPassword: builder.mutation({
+      query: (body) => ({
+        url: `/forgot-password`,
+        method: 'PUT',
+        body,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: (body) => ({
+        url: `/reset-password`,
+        method: 'PUT',
+        body,
+      }),
+    }),
   }),
 })
 
@@ -72,4 +86,6 @@ export const {
   useAccountActivationMutation,
   useGetUserProfileQuery,
   useUpdateUserProfileMutation,
+  useFrogotPasswordMutation,
+  useResetPasswordMutation,
 } = apiSlice

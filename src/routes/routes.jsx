@@ -8,6 +8,8 @@ import Login from '../components/Login'
 import Admin from '../components/Admin'
 import PrivateRoute from '../components/PrivateRoute'
 import Private from '../components/Private'
+import ForgotPassword from '../components/ForgotPassword'
+import ResetPassword from '../components/ResetPassword'
 
 export const baseRoute = createBrowserRouter([
   {
@@ -25,9 +27,7 @@ export const baseRoute = createBrowserRouter([
       },
       {
         path: '/login',
-        element: (
-            <Login />
-        ),
+        element: <Login />,
       },
       {
         path: '/auth/activate/:tokenId',
@@ -48,6 +48,14 @@ export const baseRoute = createBrowserRouter([
             <Private />
           </PrivateRoute>
         ),
+      },
+      {
+        path: '/auth/password/forgot',
+        element: <ForgotPassword />,
+      },
+      {
+        path: '/auth/password/reset/:tokenId',
+        element: <ResetPassword />,
       },
     ],
   },
