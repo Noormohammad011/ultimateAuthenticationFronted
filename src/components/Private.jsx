@@ -7,7 +7,9 @@ import { isAuth, makeid, updateUser } from '../helper/helper'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+
 const Private = () => {
+
   const { data, isError, isLoading } = useGetUserProfileQuery({
     id: isAuth()._id,
   })
@@ -22,9 +24,9 @@ const Private = () => {
     },
   ] = useUpdateUserProfileMutation()
   const [values, setValues] = useState({
-    role: data?.user?.role,
-    name: data?.user?.name,
-    email: data?.user?.email,
+    role: data?.user?.role || isAuth()?.role,
+    name: data?.user?.name || isAuth()?.name,
+    email: data?.user?.email || isAuth()?.email,
     password: '',
   })
 

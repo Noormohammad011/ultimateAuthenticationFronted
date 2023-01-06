@@ -1,21 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSigninMutation } from '../features/api/apiSlice'
 import { toast } from 'react-toastify'
 
-import { useNavigate } from 'react-router-dom'
-import { isAuth, makeid } from '../helper/helper'
+import { Link } from 'react-router-dom'
+import { makeid } from '../helper/helper'
+import Google from './Google'
 
 const Login = () => {
   const [values, setValues] = useState({
     email: '',
     password: '',
   })
-  const navigate = useNavigate()
 
   const { email, password } = values
   const [signin, { isLoading, error, isError, isSuccess }] = useSigninMutation()
-  const handleChange = (name) => (event) => {
-    setValues({ ...values, [name]: event.target.value })
+
+  const handleChange = (e) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }))
   }
   const resetForm = () => {
     setValues({ ...values, name: '', email: '', password: '' })
@@ -25,18 +29,6 @@ const Login = () => {
     signin({ email, password })
     resetForm()
   }
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success('Signin successfull', {
-        toastId: makeid(),
-      })
-      setTimeout(() => {
-         isAuth() && isAuth().role === 'admin'
-           ? navigate('/admin')
-           : navigate('/private')
-      }, 2500)
-    }
-  }, [isSuccess, navigate])
   if (isLoading) {
     return <p>Loading</p>
   }
@@ -45,19 +37,25 @@ const Login = () => {
       toastId: makeid(),
     })
   }
+  if (isSuccess) {
+    toast.success('Signin successfull', {
+      toastId: makeid(),
+    })
+  }
 
   return (
     <div>
       <h2 className='text-center'>Login</h2>
-
+      <Google />
       <form className='row g-3' onSubmit={handleSubmit}>
         <div className='col-12'>
           <label htmlFor='inputEmail' className='form-label'>
             Email
           </label>
           <input
-            onChange={handleChange('email')}
+            onChange={handleChange}
             value={email}
+            name='email'
             type='email'
             className='form-control'
             id='inputEmail'
@@ -69,7 +67,8 @@ const Login = () => {
             Password
           </label>
           <input
-            onChange={handleChange('password')}
+            onChange={handleChange}
+            name='password'
             value={password}
             type='password'
             className='form-control'
@@ -77,11 +76,16 @@ const Login = () => {
             placeholder='Password'
           />
         </div>
-        <div className='col-12'>
-          <button type='submit' className='btn btn-primary'>
-            Login
-          </button>
-        </div>
+        <button type='submit' className='btn btn-sm btn-outline-primary'>
+          Login
+        </button>
+        <br />
+        <Link
+          to='/auth/password/forgot'
+          className='btn btn-sm btn-outline-danger'
+        >
+          Forgot Password
+        </Link>
       </form>
     </div>
   )

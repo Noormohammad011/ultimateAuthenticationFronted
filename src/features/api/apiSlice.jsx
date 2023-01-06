@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { authenticate, getCookie } from '../../helper/helper'
 import { toast } from 'react-toastify'
 import { userLoggedIn } from './authSlice'
+
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -28,13 +29,16 @@ export const apiSlice = createApi({
           toast.success(`Hey ${data?.user?.name}, Welcome back!`)
         })
         dispatch(
-          dispatch(
-            userLoggedIn({
-              token: data.token,
-              user: data.user,
-            })
-          )
+          userLoggedIn({
+            token: data.token,
+            user: data.user,
+          })
         )
+        if (data?.user?.role === 'admin') {
+          window.location.href = '/admin'
+        } else {
+          window.location.href = '/private'
+        }
       },
     }),
     accountActivation: builder.mutation({
@@ -77,6 +81,30 @@ export const apiSlice = createApi({
         body,
       }),
     }),
+    googleLogin: builder.mutation({
+      query: (body) => ({
+        url: `/google-login`,
+        method: 'POST',
+        body,
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        const { data } = await queryFulfilled
+        authenticate(data, () => {
+          toast.success(`Hey ${data?.user?.name}, Welcome back!`)
+        })
+        dispatch(
+          userLoggedIn({
+            token: data.token,
+            user: data.user,
+          })
+        )
+        if (data?.user?.role === 'admin') {
+          window.location.href = '/admin'
+        } else {
+          window.location.href = '/private'
+        }
+      },
+    }),
   }),
 })
 
@@ -88,4 +116,5 @@ export const {
   useUpdateUserProfileMutation,
   useFrogotPasswordMutation,
   useResetPasswordMutation,
+  useGoogleLoginMutation,
 } = apiSlice

@@ -6,8 +6,10 @@ import {
 import { isAuth, makeid, updateUser } from '../helper/helper'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { useSelector } from 'react-redux'
 
 const Admin = () => {
+  const { user } = useSelector((state) => state.auth)
   const { data, isError, isLoading } = useGetUserProfileQuery({
     id: isAuth()._id,
   })
@@ -22,9 +24,9 @@ const Admin = () => {
     },
   ] = useUpdateUserProfileMutation()
   const [values, setValues] = useState({
-    role: data?.user?.role,
-    name: data?.user?.name,
-    email: data?.user?.email,
+    role: data?.user?.role || isAuth()?.role,
+    name: data?.user?.name || isAuth()?.name,
+    email: data?.user?.email || isAuth()?.email,
     password: '',
   })
 
