@@ -14,7 +14,8 @@ const Navbar = () => {
         navigate('/private')
       }
     }
-  }, [user, navigate])
+    // eslint-disable-next-line
+  }, [user])
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
       <div className='container'>
