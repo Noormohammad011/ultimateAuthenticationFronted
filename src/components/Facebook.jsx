@@ -36,7 +36,7 @@ const Facebook = () => {
         authorizationUrl='https://www.facebook.com/dialog/oauth'
         responseType='token'
         clientId={`${process.env.REACT_APP_FACEBOOK_APP_ID}`}
-        redirectUri='https://ultimateauth.onrender.com'
+        redirectUri='https://ultimateauth.onrender.com/oauth-callback'
         onSuccess={onSuccess}
         onFailure={onFailure}
         render={(renderProps) => (
