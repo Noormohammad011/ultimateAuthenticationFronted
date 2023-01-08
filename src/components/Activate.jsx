@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { decodeToken } from 'react-jwt'
 import { useAccountActivationMutation } from '../features/api/apiSlice'
 import { toast } from 'react-toastify'
 import { makeid } from '../helper/helper'
 const Activate = () => {
   const { tokenId } = useParams()
+  const navigate = useNavigate()
    const [values, setValues] = useState({
      name: '',
      token: '',
@@ -48,6 +49,7 @@ const Activate = () => {
     toast.success('Account activation successfull', {
       toastId: makeid(),
     })
+    navigate('/login')
   }
   if (isError) { 
     toast.error(`${error?.data?.error || error?.data?.message}`, {
