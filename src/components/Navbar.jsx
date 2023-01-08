@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { isAuth, signout } from '../helper/helper'
+import { useSelector } from 'react-redux'
 const Navbar = () => {
   const navigate = useNavigate()
+  const { user } = useSelector((state) => state.auth)
+  
+  useEffect(() => {
+    if (user) {
+      if (user.role === 'admin') {
+        navigate('/admin')
+      } else {
+        navigate('/private')
+      }
+    }
+  }, [user, navigate])
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
       <div className='container'>

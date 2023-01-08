@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
 import { makeid } from '../helper/helper'
 import Google from './Google'
+import Facebook from './Facebook'
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -47,6 +48,7 @@ const Login = () => {
     <div>
       <h2 className='text-center'>Login</h2>
       <Google />
+      <Facebook />
       <form className='row g-3' onSubmit={handleSubmit}>
         <div className='col-12'>
           <label htmlFor='inputEmail' className='form-label'>

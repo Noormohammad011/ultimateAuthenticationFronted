@@ -3,20 +3,17 @@ import {
   useGetUserProfileQuery,
   useUpdateUserProfileMutation,
 } from '../features/api/apiSlice'
-import { isAuth, makeid, updateUser } from '../helper/helper'
+import { isAuth, makeid } from '../helper/helper'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { useSelector } from 'react-redux'
 
 const Admin = () => {
-  const { user } = useSelector((state) => state.auth)
   const { data, isError, isLoading } = useGetUserProfileQuery({
     id: isAuth()._id,
   })
   const [
     updateUserProfile,
     {
-      data: profileUpdateData,
       isLoading: profileUpdateIsloading,
       error,
       isError: profileUpdateIsError,
@@ -56,10 +53,8 @@ const Admin = () => {
     })
   }
   if (profileUpdateIsSuccess) {
-    updateUser(profileUpdateData?.updatedUser, () => {
-      toast.success('Profile updated successfully', {
-        toastId: makeid(),
-      })
+    toast.success('Profile updated successfully', {
+      toastId: makeid(),
     })
   }
   const updateForm = () => (
