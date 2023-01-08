@@ -36,7 +36,7 @@ const Facebook = () => {
         authorizationUrl='https://www.facebook.com/dialog/oauth'
         responseType='token'
         clientId={`${process.env.REACT_APP_FACEBOOK_APP_ID}`}
-        redirectUri='https://amazing-sorbet-063a48.netlify.app'
+        redirectUri='https://amazing-sorbet-063a48.netlify.app/login/oauth2/code/facebook'
         onSuccess={onSuccess}
         onFailure={onFailure}
         render={(renderProps) => (
