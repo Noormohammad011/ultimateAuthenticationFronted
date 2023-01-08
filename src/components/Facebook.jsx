@@ -36,7 +36,7 @@ const Facebook = () => {
         authorizationUrl='https://www.facebook.com/dialog/oauth'
         responseType='token'
         clientId={`${process.env.REACT_APP_FACEBOOK_APP_ID}`}
-        redirectUri='https://ultimateauth.onrender.com'
+        redirectUri='https://amazing-sorbet-063a48.netlify.app'
         onSuccess={onSuccess}
         onFailure={onFailure}
         render={(renderProps) => (
@@ -54,3 +54,6 @@ const Facebook = () => {
 }
 
 export default Facebook
+
+
+//https://www.facebook.com/dialog/oauth?client_id=500862928820123&scope=&redirect_uri=https://ultimateauth.onrender.com&response_type=token
