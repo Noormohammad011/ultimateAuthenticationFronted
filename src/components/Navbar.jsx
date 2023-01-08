@@ -14,7 +14,7 @@ const Navbar = () => {
         navigate('/private')
       }
     }
-  }, [user, navigate])
+  }, [user])
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
       <div className='container'>

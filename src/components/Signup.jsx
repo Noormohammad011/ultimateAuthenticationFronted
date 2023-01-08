@@ -33,7 +33,7 @@ const Signup = () => {
     })
   }
   if (isSuccess) {
-    toast.success('Signup successfull', {
+    toast.success('Please check your mail to activation', {
       toastId: makeid(),
     })
   }

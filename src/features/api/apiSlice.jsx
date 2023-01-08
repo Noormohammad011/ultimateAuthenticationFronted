@@ -17,19 +17,6 @@ export const apiSlice = createApi({
         body,
       }),
       invalidatesTags: ['Auth'],
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        const { data } = await queryFulfilled
-        console.log(data)
-        authenticate(data, () => {
-          toast.success(`Hey ${data?.user?.name}, Welcome back!`)
-        })
-        dispatch(
-          userLoggedIn({
-            token: data.token,
-            user: data.user,
-          })
-        )
-      },
     }),
     signin: builder.mutation({
       query: (body) => ({

@@ -8,8 +8,6 @@ const Facebook = () => {
   const [faceBookLogin, { isLoading, error, isSuccess, isError }] =
     useFaceBookLoginMutation()
   const responseFacebook = (response) => {
-    console.log('token', response.accessToken)
-    console.log('user', response.userID)
     faceBookLogin({
       userID: response.userID,
       accessToken: response.accessToken,
